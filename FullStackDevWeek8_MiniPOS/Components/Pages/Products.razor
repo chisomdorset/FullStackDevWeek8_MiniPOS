@@ -1,0 +1,65 @@
+@page "/products"
+@using FullStackDevWeek8_MiniPOS.Services
+@using FullStackDevWeek8_MiniPOS.Models
+@using FullStackDevWeek8_MiniPOS.Services
+@inject CartService CartService
+
+@rendermode InteractiveServer
+
+<h3>Products</h3>
+
+
+@if (!string.IsNullOrWhiteSpace(message))
+{
+    <div class="alert alert-success">
+        @message 
+    </div>
+}
+
+
+
+<SearchBox Placeholder="Search Products"
+           @bind-SearchTerm="filterText" /><br />
+
+@foreach(var product in FilteredProducts) {
+    <div class="card p-3 mb-3">
+        <h5>@product.Name</h5>
+        <p>€@product.Price</p>
+        <StatusBadge Quantity="@product.Quantity" />
+        <button class="btn btn-primary mt-2"
+                @onclick="() => AddToCart(product)">
+            Add To Cart
+        </button>
+    </div>
+}
+
+
+
+
+
+
+@code {
+    string filterText = "";
+    List<Product> products = new() {
+        new() { Id = 1, Name = "Laptop", Price = 999, Quantity = 3 },
+        new() { Id = 2, Name = "Keyboard", Price = 80, Quantity = 15 },
+        new() { Id = 3, Name = "Monitor", Price = 220, Quantity = 8 }
+    };
+
+    IEnumerable<Product> FilteredProducts =>
+        string.IsNullOrWhiteSpace(filterText)
+            ? products
+            : products.Where(x => x.Name.Contains(filterText, StringComparison.OrdinalIgnoreCase));
+
+    // void AddToCart(Product product) { CartService.Add(product); }
+    
+    string message = "";
+
+    void AddToCart(Product product)
+    {
+        CartService.Add(product);
+
+        message = $"{product.Name} added to cart";
+    }
+}
+

@@ -1,0 +1,30 @@
+
+@page "/cart"
+@using FullStackDevWeek8_MiniPOS.Services
+@inject CartService  CartService
+
+@rendermode InteractiveServer
+
+
+
+<h3>Cart(@CartService.Products.Count)</h3>
+<table class="table">
+    <thead><tr><th>Name</th><th>Price</th><th></th></tr></thead>
+    <tbody>
+    @foreach(var item in CartService.Products) {
+        <tr>
+            <td>@item.Name</td>
+            <td>€@item.Price</td>
+            <td><button class="btn btn-danger"
+                        @onclick="() => CartService.Remove(item)">
+                Remove</button></td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+<div class="alert alert-info">
+    Total: <strong>€@CartService.GetTotal()</strong>
+</div>
+<button class="btn btn-warning"
+        @onclick="CartService.Clear">Clear Cart</button>

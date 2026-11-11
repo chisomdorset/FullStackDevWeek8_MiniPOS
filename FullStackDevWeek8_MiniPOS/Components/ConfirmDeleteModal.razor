@@ -1,0 +1,23 @@
+@rendermode InteractiveServer
+
+@if (Show) {
+    <div class="modal fade show d-block">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header"><h5>Confirm Delete</h5></div>
+                <div class="modal-body">Are you sure?</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" @onclick="Cancel">Cancel</button>
+                    <button class="btn btn-danger" @onclick="Confirm">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+@code {
+    [Parameter] public bool Show { get; set; }
+    [Parameter] public EventCallback OnConfirm { get; set; }
+    [Parameter] public EventCallback OnCancel { get; set; }
+    async Task Confirm() { await OnConfirm.InvokeAsync(); }
+    async Task Cancel() { await OnCancel.InvokeAsync(); }	
+}

@@ -1,0 +1,13 @@
+@page "/checkout"
+@using FullStackDevWeek8_MiniPOS.Services
+@inject CartService CartService
+
+@rendermode InteractiveServer
+
+ 
+<h3>Checkout</h3>
+<div class="card p-3">
+    <h5>Items: @CartService.Products.Count</h5>
+    <h5>Total: €@CartService.GetTotal()</h5>
+    <button class="btn btn-success">Place Order</button>
+</div>

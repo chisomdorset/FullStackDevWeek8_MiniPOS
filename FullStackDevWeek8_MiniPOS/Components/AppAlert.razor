@@ -1,0 +1,13 @@
+
+<div class="@CssClass">@Message</div>
+
+@code {
+    [Parameter] public string Message { get; set; } = "";
+    [Parameter] public string Type { get; set; } = "Info";
+    string CssClass => Type switch {
+        "Success" => "alert alert-success",
+        "Error" => "alert alert-danger",
+        _ => "alert alert-info"
+    };
+}
+

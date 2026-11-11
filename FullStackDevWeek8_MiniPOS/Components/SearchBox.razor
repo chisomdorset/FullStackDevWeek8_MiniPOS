@@ -1,0 +1,57 @@
+@rendermode InteractiveServer
+
+
+<div class="input-group">
+
+    <span class="input-group-text">
+        🔍
+    </span>
+
+    <input class="form-control"
+           placeholder="@Placeholder"
+           value="@SearchTerm"
+           @oninput="OnInputChanged" />
+
+</div>
+
+@code {
+
+    [Parameter]
+    public string Placeholder { get; set; } = "Search";
+
+    [Parameter]
+    public string SearchTerm { get; set; } = "";
+
+    [Parameter]
+    public EventCallback<string> SearchTermChanged { get; set; }
+
+    private async Task OnInputChanged(ChangeEventArgs e)
+    {
+        SearchTerm = e.Value?.ToString() ?? "";
+
+        await SearchTermChanged.InvokeAsync(SearchTerm);
+    }
+}
+
+
+
+@* <div class="input-group"> *@
+@*      *@
+@*     <span class="input-group-text">🔍</span> *@
+@*      *@
+@*     <input class="form-control" *@
+@*            placeholder="@Placeholder" *@
+@*            @bind="SearchTerm" *@
+@*            @bind:event="oninput"/> *@
+@* </div> *@
+@* @code { *@
+@*      *@
+@*     [Parameter]  *@
+@*     public string Placeholder { get; set; } = "Search"; *@
+@*      *@
+@*     [Parameter]  *@
+@*     public string SearchTerm { get; set; } = ""; *@
+@*      *@
+@*     [Parameter]  *@
+@*     public EventCallback<string> SearchTermChanged { get; set; } *@
+@* } *@
